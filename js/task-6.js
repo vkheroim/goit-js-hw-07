@@ -1,7 +1,7 @@
 function getRandomHexColor() {
   return `#${Math.floor(Math.random() * 16777215)
     .toString(16)
-    .padStart(6, 0)}`;
+    .padStart(6, "0")}`;
 }
 
 const boxesInput = document.querySelector('input[type="number"]');
@@ -12,24 +12,21 @@ const boxesContainer = document.getElementById("boxes");
 createButton.addEventListener("click", createBoxes);
 destroyButton.addEventListener("click", destroyBoxes);
 
-function createBoxes(amount) {
-  amount = boxesInput.value; //amount of boxes
+function createBoxes() {
+  boxesContainer.innerHTML = ""; // Очищаємо контейнер перед створенням нових блоків
+  const amount = parseInt(boxesInput.value);
 
-  if (amount < 1 || amount > 100) {
-    return console.log("Invalid"); //if not a number that we need
+  if (isNaN(amount) || amount < 1 || amount > 100) {
+    return console.log("Invalid"); // Повідомлення про невірне введення
   }
 
   for (let i = 0; i < amount; i++) {
-    //counter the number of boxes
-    const box = document.createElement("div"); //creating the box
-    const size = 30 + i * 10; //making the size of the box bigger each time
-
-    //* adding the measures
+    const box = document.createElement("div");
+    const size = 30 + i * 10;
     box.style.width = `${size}px`;
     box.style.height = `${size}px`;
     box.style.backgroundColor = getRandomHexColor();
-
-    boxesContainer.append(box);
+    boxesContainer.appendChild(box);
   }
 
   boxesInput.value = "";

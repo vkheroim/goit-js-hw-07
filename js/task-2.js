@@ -13,8 +13,10 @@ const images = [
   },
 ];
 
-const galleryList = document.querySelectorAll(".gallery");
-console.log(galleryList);
+const gallery = document.querySelector(".gallery");
+
+// Створюємо фрагмент документа для оптимізації додавання до DOM
+const fragment = document.createDocumentFragment();
 
 images.forEach((image) => {
   const img = document.createElement("img");
@@ -23,6 +25,9 @@ images.forEach((image) => {
   img.src = image.url;
   img.alt = image.alt;
 
-  listItem.append(img);
-  galleryList[0].append(listItem);
+  listItem.appendChild(img);
+  fragment.appendChild(listItem); // Додаємо кожен елемент li до фрагменту
 });
+
+// Додаємо фрагмент разом з усіма елементами li до DOM за одну операцію
+gallery.appendChild(fragment);
